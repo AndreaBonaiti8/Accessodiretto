@@ -24,7 +24,7 @@ namespace Accessodiretto
         public int ricercaindice(string nome)
         {
             int riga = 0;
-            using (StreamReader sr = File.OpenText("File.dat"))
+            using (StreamReader sr = File.OpenText("./File.dat"))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
@@ -43,7 +43,7 @@ namespace Accessodiretto
         public int ricercaindicecancfisic(string nome)
         {
             int riga = 0;
-            using (StreamReader sr = File.OpenText("File.dat"))
+            using (StreamReader sr = File.OpenText("./File.dat"))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
@@ -62,7 +62,7 @@ namespace Accessodiretto
         public string[] ricercaprod(string nome)
         {
             int riga = 0;
-            using (StreamReader sr = File.OpenText("File.dat"))
+            using (StreamReader sr = File.OpenText("./File.dat"))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
@@ -116,18 +116,9 @@ namespace Accessodiretto
             }
             return -1;
         }
-        public void Aggiunta_Click()
-        {
-            var file = new FileStream("File.dat", FileMode.Append, FileAccess.Write, FileShare.Read);
-            StreamWriter sw = new StreamWriter(file);
-            sw.WriteLine($"{prodotto.Text};{prezzo.Text};1;0;".PadRight(LunghezzaRecord - 4) + "##");
-            sw.Close();
-            prodotto.Text = null;
-            prezzo.Text = null;
-        }
-        private void Aggiungi_Click_1(object sender, EventArgs e)
-        {
 
+        private void Aggiungi_Click(object sender, EventArgs e)
+        {
             if (prodotto.Text == string.Empty || prezzo.Text == string.Empty)
             {
                 MessageBox.Show("Devi prima inserire un prodotto e il suo prezzo!", "Cella vuota");
@@ -146,14 +137,6 @@ namespace Accessodiretto
                 prodotto.Text = null;
                 prezzo.Text = null;
             }
-        }
-        private void reset_Click_1(object sender, EventArgs e)
-        {
-            var file = new FileStream("File.dat", FileMode.Truncate, FileAccess.Write, FileShare.Read);
-            StreamWriter sw = new StreamWriter(file);
-            sw.Write(string.Empty);
-            sw.Close();
-            MessageBox.Show("File Resetato Correttamente", "Fine Operazione");
         }
 
         private void cancellalogic_Click(object sender, EventArgs e)
@@ -188,7 +171,7 @@ namespace Accessodiretto
             }
         }
 
-        private void cerca_Click_1(object sender, EventArgs e)
+        private void cerca_Click(object sender, EventArgs e)
         {
             if (proddacerc.Text == string.Empty)
             {
@@ -212,7 +195,7 @@ namespace Accessodiretto
             }
         }
 
-        private void modifica_Click_1(object sender, EventArgs e)
+        private void modifica_Click(object sender, EventArgs e)
         {
             if (proddamod.Text == string.Empty || prezdamod.Text == string.Empty)
             {
@@ -242,7 +225,7 @@ namespace Accessodiretto
             }
         }
 
-        private void cancfisic_Click_1(object sender, EventArgs e)
+        private void cancfisic_Click(object sender, EventArgs e)
         {
             if (cancfisic.Text == string.Empty)
             {
@@ -280,7 +263,6 @@ namespace Accessodiretto
                         }
                         sws.Close();
                         cancfisic.Text = null;
-                        MessageBox.Show("Cancellazione Fisica Eseguita Correttamente", "Fine Operazione");
                     }
                     else
                     {
@@ -290,7 +272,7 @@ namespace Accessodiretto
             }
         }
 
-        private void visualizza_Click_1(object sender, EventArgs e)
+        private void visualizza_Click(object sender, EventArgs e)
         {
             string percorsofiles = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "File.dat");
             Process.Start(percorsofiles);
@@ -300,14 +282,13 @@ namespace Accessodiretto
         {
             if (proddarecu.Text == string.Empty)
             {
-                MessageBox.Show("Devi prima inserire un prodotto!", "Cella vuota");
+                MessageBox.Show("Scrivi il prodotto da recuperare");
             }
             else
             {
                 int indice = ricercaindicedarecu(proddarecu.Text);
                 if (indice == -1)
                 {
-                    MessageBox.Show("Assicurati che il prodotto esista e che sia cancellato!", "Prod. non Trovato");
                     proddarecu.Text = null;
                 }
                 else
@@ -323,7 +304,6 @@ namespace Accessodiretto
                     writer.Close();
                     file.Close();
                     proddarecu.Text = null;
-                    MessageBox.Show("Prodotto Recuperato Correttamente", "Fine Operazione");
                 }
             }
         }
