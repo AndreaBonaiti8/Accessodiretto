@@ -266,7 +266,6 @@ namespace Accessodiretto
                         {
                             line[i] = line[i + 1];
                         }
-
                         var file = new FileStream("File.dat", FileMode.Truncate, FileAccess.Write, FileShare.Read);
                         StreamWriter sw = new StreamWriter(file);
                         sw.Write(string.Empty);
