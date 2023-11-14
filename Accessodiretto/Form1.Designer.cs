@@ -66,7 +66,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(229, 19);
+            this.label2.Location = new System.Drawing.Point(224, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 13);
             this.label2.TabIndex = 1;
@@ -104,9 +104,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(107, 19);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.Size = new System.Drawing.Size(38, 13);
             this.label6.TabIndex = 5;
-            this.label6.Text = "label6";
+            this.label6.Text = "prezzo";
             // 
             // label7
             // 
@@ -162,7 +162,7 @@
             this.modifica.Name = "modifica";
             this.modifica.Size = new System.Drawing.Size(165, 42);
             this.modifica.TabIndex = 11;
-            this.modifica.Text = "button4";
+            this.modifica.Text = "modifica";
             this.modifica.UseVisualStyleBackColor = true;
             this.modifica.Click += new System.EventHandler(this.modifica_Click);
             // 
@@ -174,12 +174,13 @@
             this.reset.TabIndex = 12;
             this.reset.Text = "resetta file";
             this.reset.UseVisualStyleBackColor = true;
+            this.reset.Click += new System.EventHandler(this.reset_Click);
             // 
             // cancfisic
             // 
             this.cancfisic.Location = new System.Drawing.Point(337, 176);
             this.cancfisic.Name = "cancfisic";
-            this.cancfisic.Size = new System.Drawing.Size(96, 42);
+            this.cancfisic.Size = new System.Drawing.Size(145, 42);
             this.cancfisic.TabIndex = 13;
             this.cancfisic.Text = "Cancellazione fisica";
             this.cancfisic.UseVisualStyleBackColor = true;
@@ -207,7 +208,7 @@
             // 
             // proddacerc
             // 
-            this.proddacerc.Location = new System.Drawing.Point(232, 35);
+            this.proddacerc.Location = new System.Drawing.Point(227, 35);
             this.proddacerc.Name = "proddacerc";
             this.proddacerc.Size = new System.Drawing.Size(110, 20);
             this.proddacerc.TabIndex = 16;
@@ -251,7 +252,7 @@
             // 
             this.proddacancfisic.Location = new System.Drawing.Point(337, 150);
             this.proddacancfisic.Name = "proddacancfisic";
-            this.proddacancfisic.Size = new System.Drawing.Size(96, 20);
+            this.proddacancfisic.Size = new System.Drawing.Size(145, 20);
             this.proddacancfisic.TabIndex = 22;
             // 
             // proddarecu
@@ -265,7 +266,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(963, 607);
+            this.ClientSize = new System.Drawing.Size(963, 403);
             this.Controls.Add(this.proddarecu);
             this.Controls.Add(this.proddacancfisic);
             this.Controls.Add(this.proddacanclogic);
@@ -292,6 +293,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

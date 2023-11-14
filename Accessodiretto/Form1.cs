@@ -119,6 +119,8 @@ namespace Accessodiretto
 
         private void Aggiungi_Click(object sender, EventArgs e)
         {
+            string[] prodesi = File.ReadAllLines("File.dat");
+            bool prodottoEsistente = false;
             if (prodotto.Text == string.Empty || prezzo.Text == string.Empty)
             {
                 MessageBox.Show("Devi prima inserire un prodotto e il suo prezzo!", "Cella vuota");
@@ -128,14 +130,28 @@ namespace Accessodiretto
                 MessageBox.Show("Devi inserire il prezzo in valori numerici!", "Prezzo in Numero");
                 prezzo.Text = string.Empty;
             }
+            for (int i = 0; i < prodesi.Length; i++)
+            {
+                string[] parti = prodesi[i].Split(';');
+                if (parti.Length >= 2 && parti[0] == prodotto.Text)
+                {
+                    int quantita = int.Parse(parti[2]) + 1;
+                    prodesi[i] = $"{prodotto.Text};{prezzo.Text};{quantita};0;";
+                    prodottoEsistente = true;
+                    break;
+                }
+            }
+            if (prodottoEsistente)
+            {
+                File.WriteAllLines("File.dat", prodesi);
+            }
             else
             {
-                var file = new FileStream("File.dat", FileMode.Append, FileAccess.Write, FileShare.Read);
-                StreamWriter sw = new StreamWriter(file);
-                sw.WriteLine($"{prodotto.Text};{prezzo.Text};1;0;".PadRight(LunghezzaRecord - 4) + "##");
-                sw.Close();
-                prodotto.Text = null;
-                prezzo.Text = null;
+                using (var file = new FileStream("File.dat", FileMode.Append, FileAccess.Write, FileShare.Read))
+                using (StreamWriter sw = new StreamWriter(file))
+                {
+                    sw.WriteLine($"{prodotto.Text};{prezzo.Text};1;0;".PadRight(LunghezzaRecord - 4) + "##");
+                }
             }
         }
 
@@ -160,7 +176,7 @@ namespace Accessodiretto
                     var file = new FileStream("File.dat", FileMode.Open, FileAccess.Write);
                     BinaryWriter writer = new BinaryWriter(file);
                     file.Seek(LunghezzaRecord * indice, SeekOrigin.Begin);
-                    line = $"{prodotto[0]};{prodotto[1]};{prodotto[3]};1;".PadRight(LunghezzaRecord - 4) + "##";
+                    line = $"{prodotto[0]};{prodotto[1]};{prodotto[2]};1;".PadRight(LunghezzaRecord - 4) + "##";
                     byte[] bytes = Encoding.UTF8.GetBytes(line);
                     writer.Write(bytes, 0, bytes.Length);
                     writer.Close();
@@ -230,6 +246,7 @@ namespace Accessodiretto
             if (cancfisic.Text == string.Empty)
             {
                 MessageBox.Show("Devi prima inserire un prodotto!", "Cella vuota");
+                cancfisic.Text = null;
             }
             else
             {
@@ -298,7 +315,7 @@ namespace Accessodiretto
                     var file = new FileStream("File.dat", FileMode.Open, FileAccess.Write);
                     BinaryWriter writer = new BinaryWriter(file);
                     file.Seek(LunghezzaRecord * indice, SeekOrigin.Begin);
-                    line = $"{prodotto[0]};{prodotto[1]};1;0;".PadRight(LunghezzaRecord - 4) + "##";
+                    line = $"{prodotto[0]};{prodotto[1]};{prodotto[2]};0;".PadRight(LunghezzaRecord - 4) + "##";
                     byte[] bytes = Encoding.UTF8.GetBytes(line);
                     writer.Write(bytes, 0, bytes.Length);
                     writer.Close();
@@ -306,6 +323,20 @@ namespace Accessodiretto
                     proddarecu.Text = null;
                 }
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void reset_Click(object sender, EventArgs e)
+        {
+            var file = new FileStream("File.dat", FileMode.Truncate, FileAccess.Write, FileShare.Read);
+            StreamWriter sw = new StreamWriter(file);
+            sw.Write(string.Empty);
+            sw.Close();
+            MessageBox.Show("File Resetato Correttamente", "Fine Operazione");
         }
     }
 }
